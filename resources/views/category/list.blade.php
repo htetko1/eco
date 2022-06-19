@@ -23,19 +23,19 @@
                 <form action="{{ route('category.destroy',$category->id) }}" class="d-inline-block" method="post">
                     @csrf
                     @method('delete')
-                </form>
-                <a class="btn btn-outline-danger btn-sm edit" title="Edit" onclick="return confirm('Are you sure to delete {{ $category->title }} category?')">
+                <button class="btn btn-outline-danger btn-sm edit" title="Delete" onclick="return confirm('Are you sure to delete {{ $category->title }} category?')">
                     <i class="fas fa-trash-alt"></i>
-                </a>
+                </button>
+                </form>
             </td>
             <td>
              <span class="small">
-              <i class="feather-calendar"></i>
+              <i class="fas fa-calendar"></i>
               {{ $category->created_at->format('d-m-y') }}
               </span>
                 <br>
                 <span class="small">
-                <i class="feather-clock"></i>
+                <i class="fas fa-clock"></i>
                 {{ $category->created_at->format('h:i A') }}
                 </span>
             </td>

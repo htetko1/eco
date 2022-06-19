@@ -14,7 +14,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="mb-0">
-                                    <i class="feather-layers"></i>
+                                    <i class="fas fa-layer-group"></i>
                                     Category List
                                 </h4>
                                 <hr>

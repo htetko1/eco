@@ -51,18 +51,16 @@
                     </ul>
                 </li>
 
-
-
-{{--                <li>--}}
-{{--                    <a href="javascript: void(0);" class="has-arrow waves-effect">--}}
-{{--                        <i class="ri-map-pin-line"></i>--}}
-{{--                        <span>Maps</span>--}}
-{{--                    </a>--}}
-{{--                    <ul class="sub-menu" aria-expanded="false">--}}
-{{--                        <li><a href="maps-google.html">Google Maps</a></li>--}}
-{{--                        <li><a href="maps-vector.html">Vector Maps</a></li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-product-hunt-line"></i>
+                        <span>Products</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('product.index') }}">Products List</a></li>
+                        <li><a href="{{ route('product.create') }}">Create Products</a></li>
+                    </ul>
+                </li>
                 <li class="menu-title">Pages</li>
 
                 <li>

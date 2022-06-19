@@ -16,10 +16,10 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
-//    public function profile()
-//    {
-//        return view('profile.profile');
-//    }
+    public function profile()
+    {
+        return view('profile.profile');
+    }
 
     public function NameEmail()
     {

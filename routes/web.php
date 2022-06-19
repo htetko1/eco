@@ -40,7 +40,7 @@ Auth::routes();
 
 
 
-//        Route::get('/profile', [ProfileController::class,'profile'])->name('profile');
+        Route::get('/profile', [ProfileController::class,'profile'])->name('profile');
 //    Route::get('/profile-edit', [ProfileController::class,'edit'])->name('profile.edit');
         Route::get('/edit-password', [ProfileController::class,'password'])->name('profile.edit.password');
         Route::get('/edit-name-and-email', [ProfileController::class,'NameEmail'])->name('profile.edit.name.email');
@@ -53,9 +53,10 @@ Auth::routes();
 //        Route::post("/update-user-info",[ProfileController::class,"updateInfo"])->name("profile.update.info");
 
 
-    Route::resource("category",'\App\Http\Controllers\CategoryController');
-    Route::resource('article','\App\Http\Controllers\ArticleController');
-
+Route::resource("category",'\App\Http\Controllers\CategoryController');
+Route::resource('article','\App\Http\Controllers\ArticleController');
+Route::resource('product','\App\Http\Controllers\ProductController');
+Route::resource("photo",\App\Http\Controllers\PhotoController::class);
 
 
 

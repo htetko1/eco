@@ -19,9 +19,8 @@ class ArticleController extends Controller
     {
         $articles =Article::when(isset(request()->search),function ($q){
             $search = request()->search;
-            $q->orwhere("title","like","%$search%")->orwhere("description","like","%$search%");
-        })->
-        with(['user','category'])->latest()->paginate(7);
+            $q->orWhere("title","like","%$search%")->orWhere("description","like","%$search%");
+        })->with(['user','category'])->latest()->paginate(7);
         return view("article.index",compact('articles'));
     }
 

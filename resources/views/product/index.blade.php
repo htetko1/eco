@@ -1,9 +1,21 @@
 @extends('layouts.app')
 
 @section('title')
-    Article List
+    Products List
 @endsection
+@section('head')
+    <style>
+        .article-thumbnail{
+            width: 50px;
+            height: 50px;
+            border-radius: 0.25rem;
+            background-size: 200%;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
 
+@endsection
 @section('content')
     <div class="main-content">
 
@@ -14,12 +26,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0">Article List</h4>
+                            <h4 class="mb-sm-0">Products List</h4>
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                                    <li class="breadcrumb-item active">Article List</li>
+                                    <li class="breadcrumb-item active">Products List</li>
                                 </ol>
                             </div>
 
@@ -32,19 +44,17 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-{{--                                <h4 class="card-title">Default Datatable</h4>--}}
-
                                 <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
                                             <div class="">
-                                                <a href="{{ route('article.create') }}" class="btn btn-sm btn-outline-primary">
+                                                <a href="{{ route('product.create') }}" class="btn btn-sm btn-outline-primary">
                                                     <i class="fas fa-plus-circle"></i>
-                                                    Create Article
+                                                    Create Product
                                                 </a>
-                                                <a href="{{ route('article.index') }}" class="btn btn-outline-dark btn-sm">
+                                                <a href="{{ route('product.index') }}" class="btn btn-outline-dark btn-sm">
                                                     <i class="fas fa-list"></i>
-                                                    All Article
+                                                    All Product
                                                 </a>
                                                 @isset(request()->search)
                                                     <span class="h5">Search By : "{{ request()->search }}"</span>
@@ -53,7 +63,7 @@
                                         </div>
                                         <div class="col-sm-12 col-md-6">
                                             <div id="datatable_filter" class="dataTables_filter">
-                                                <form action="{{ route('article.index') }}" method="get">
+                                                <form action="{{ route('product.index') }}" method="get">
                                                     <label>Search:<input
                                                             type="search" value="{{ request()->search }}"
                                                             class="form-control form-control-sm"
@@ -63,8 +73,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if(session('message'))
-                                        <p class="text-success">{{ session('message') }}</p>
+                                    @if(session('UpdateStatus'))
+                                        <p class="text-success">{!! session('UpdateStatus') !!}</p>
+                                    @endif
+                                    @if(session('status'))
+                                        <p class="text-success">{!! session('status') !!}</p>
                                     @endif
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -76,8 +89,9 @@
                                                 <thead>
                                                 <tr >
                                                     <th>#</th>
-                                                    <th>Article</th>
+                                                    <th>Product</th>
                                                     <th>Category</th>
+{{--                                                    <th>Stocks</th>--}}
                                                     <th>Owner</th>
                                                     <th>Controls</th>
                                                     <th>Created_at</th>
@@ -85,38 +99,43 @@
                                                 </thead>
 
                                                 <tbody>
-                                                @forelse($articles as $article)
+                                                @forelse( $products as $p)
                                                     <tr>
-                                                        <td>{{ $article->id }}</td>
+                                                        <td>{{ $p->id }}</td>
                                                         <td>
-                                                            <span class="font-weight-bold">{{ $article->title }}</span>
+                                                            <span class="font-weight-bold">{{ $p->name }}</span>
                                                             <br>
-                                                            <samll class="text-black-50">{{ Str::words($article->description,8) }}</samll>
+                                                            <samll class="text-black-50">{{ Str::words($p->description,8) }}</samll>
+                                                            <br>
+                                                            @foreach($p->getphotos as $img)
+                                                                <div class="article-thumbnail shadow-sm" style="background-image: url('{{ asset("storage/product/".$img->path) }}')"></div>
+                                                            @endforeach
                                                         </td>
-                                                        <td>{{ $article->category->title }}</td>
-                                                        <td>{{ $article->user->name }}</td>
+                                                        <td>{{ $p->category->title }}</td>
+{{--                                                        <td>{{ $p->stocks->stock_total }}</td>--}}
+                                                        <td>{{ $p->user->name }}</td>
                                                         <td class="text-nowrap">
-                                                            <a href="{{ route('article.show',$article->id) }}" class="btn btn-outline-success">
+                                                            <a href="{{ route('product.show',$p->id) }}" class="btn btn-outline-success btn-sm">
                                                                 Show
                                                             </a>
-                                                            <a href="{{ route('article.edit',$article->id) }}" class="btn btn-outline-primary">
+                                                            <a href="{{ route('product.edit',$p->id) }}" class="btn btn-outline-primary btn-sm">
                                                                 Edit
                                                             </a>
-                                                            <form action="{{ route('article.destroy',$article->id) }}" class="d-inline-block" method="post">
+                                                            <form action="{{ route('product.destroy',$p->id) }}" class="d-inline-block" method="post">
                                                                 @csrf
                                                                 @method('delete')
-                                                                <button class="btn btn-outline-danger" onclick="return confirm('Are you sure to delete this article?')">Delete</button>
+                                                                <button class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure to delete this Product?')">Delete</button>
                                                             </form>
                                                         </td>
                                                         <td>
                                     <span class="small">
                                         <i class="fas fa-calendar"></i>
-                                        {{ $article->created_at->format('d-m-y') }}
+                                        {{ $p->created_at->format('d-m-y') }}
                                     </span>
                                                             <br>
                                                             <span class="small">
                                          <i class="fas fa-clock"></i>
-                                        {{ $article->created_at->format('h:i A') }}
+                                        {{ $p->created_at->format('h:i A') }}
                                     </span>
                                                         </td>
                                                     </tr>
@@ -130,11 +149,11 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-12 col-md-5">
-                                            {{ $articles->appends(request()->all())->links() }}
+                                        <div class="col-sm-6 col-md-5">
+                                            {{ $products->appends(request()->all())->links() }}
                                         </div>
-                                        <div class="col-12">
-                                            <p class="font-weight-bold mb-0 h4">Total : {{ $articles->total() }}</p>
+                                        <div class="col-sm-6 col-md-7">
+                                            <p class="font-weight-bold mb-0 h4">Total : {{ $products->total() }}</p>
                                         </div>
                                     </div>
                                 </div>

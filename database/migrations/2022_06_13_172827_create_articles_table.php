@@ -19,6 +19,8 @@ return new class extends Migration
             $table->longText('description');
             $table->bigInteger('user_id');
             $table->bigInteger('category_id');
+//            $table->bigInteger('price');
+//            $table->bigInteger('stock_total');
             $table->timestamps();
         });
     }
